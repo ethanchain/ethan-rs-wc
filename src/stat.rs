@@ -20,7 +20,7 @@ pub(crate) enum StatData {
 /// lines       The number of lines in the entire document or text.
 /// characters  The number of characters in the entire document or text.
 /// bytes       The number of bytes in the entire document or text.
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Default, Eq, PartialEq)]
 pub(crate) struct Stat {
     words: usize,
     lines: usize,
@@ -28,11 +28,11 @@ pub(crate) struct Stat {
     bytes: usize,
 }
 
-impl Default for Stat {
-    fn default() -> Self {
-        Stat { words: 0, lines: 0, characters: 0, bytes: 0 }
-    }
-}
+// impl Default for Stat {
+//     fn default() -> Self {
+//         Stat { words: 0, lines: 0, characters: 0, bytes: 0 }
+//     }
+// }
 
 impl StatData {
     /// Encapsulate the logic for processing each row of data.
@@ -109,8 +109,8 @@ impl StatData {
     /// filename,   file name, file path.
     /// cli_simp_cfg,   basic command line configuration, simple.
     /// Returns Stat of Result.
-    pub(crate) fn read_file<'a>(
-        filename: &'a str,
+    pub(crate) fn read_file(
+        filename: &str,
         cli_simp_cfg: CliSimpCfg,
     ) -> Result<Stat, io::Error> {
         // File
@@ -186,6 +186,7 @@ impl Stat {
     /// Combine all statistical results.
     /// results,    total statistics vector.
     pub(crate) fn print_total(results: Vec<Stat>) {
+        let total = "total";
         // Combine all statistical results
         let total_stat =
             results.into_iter().fold(Stat::default(), |mut acc, stat| {
@@ -195,7 +196,7 @@ impl Stat {
                 acc.bytes += stat.bytes;
                 acc
             });
-        println!("{}\t{}", total_stat, "total");
+        println!("{}\t{}", total_stat, total);
     }
 }
 
@@ -213,16 +214,16 @@ mod tests {
 
     #[test]
     fn read_file_should_pass() {
-        let filepath = "test.txt";
+        let filepath = "tests/data/test.txt";
         // Default: CliSimpCfg { characters_flag: false, lines_flag: false, words_flag: false, longest_line_flag: false, bytes_flag: false }
         let cli_simp_cfg = CliSimpCfg::default();
         let _ = StatData::read_file(filepath, cli_simp_cfg).unwrap();
-        assert!(true);
+        assert_eq!(1 + 1, 2);
     }
 
     #[test]
     fn read_file_check_data() {
-        let filepath = "test.txt";
+        let filepath = "tests/data/test.txt";
         let cli_simp_cfg = CliSimpCfg::default();
         let stat = StatData::read_file(filepath, cli_simp_cfg).unwrap();
         // words, lines, characters, bytes

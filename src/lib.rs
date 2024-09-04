@@ -72,11 +72,10 @@ mod tests {
         // ArgsOs { inner: ["target/debug/erwc", "test.txt"] }
         let new_args = vec![
             OsString::from("target/debug/erwc"),
-            OsString::from("test.txt"),
+            OsString::from("tests/data/test.txt"),
         ];
 
-        let flag = true;
         run(new_args);
-        assert_eq!(true, flag);
+        assert_eq!(1 + 2, 3);
     }
 }

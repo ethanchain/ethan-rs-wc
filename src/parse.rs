@@ -5,28 +5,18 @@ use clap::{arg, value_parser, Arg, ArgAction, Command};
 // use std::env;
 use std::ffi::OsString;
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, Default, Eq, PartialEq)]
 pub(crate) enum ParseMode {
+    #[default]
     Normal,
     Cli,
 }
 
-impl Default for ParseMode {
-    fn default() -> Self {
-        ParseMode::Normal
-    }
-}
-
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Default, Eq, PartialEq, Clone)]
 pub(crate) enum MutliMode {
+    #[default]
     Single,
     Mutilple,
-}
-
-impl Default for MutliMode {
-    fn default() -> Self {
-        MutliMode::Single
-    }
 }
 
 #[derive(Debug, Default, Eq, PartialEq, Clone, Copy)]
@@ -38,7 +28,7 @@ pub(crate) struct CliSimpCfg {
     pub(crate) bytes_flag: bool,
 }
 
-#[derive(Debug, Default, Eq, PartialEq)]
+#[derive(Debug, Eq, PartialEq)]
 pub(crate) struct CliConfig {
     pub(crate) cli_simp_cfg: CliSimpCfg,
     pub(crate) filepaths: Vec<String>,
@@ -100,7 +90,7 @@ impl CliConfig {
             .unwrap_or_default();
         let file_path_len = filepaths.len();
         let mut multi_mode = MutliMode::default();
-        let parse_mode = if file_path_len <= 0 {
+        let parse_mode = if file_path_len == 0 {
             ParseMode::Cli
         } else {
             if file_path_len > 1 {
@@ -108,7 +98,7 @@ impl CliConfig {
             }
             ParseMode::Normal
         };
-        Ok(CliConfig {
+        let cli_config = CliConfig {
             cli_simp_cfg: CliSimpCfg {
                 characters_flag: matches.get_flag("characters"),
                 lines_flag: matches.get_flag("lines"),
@@ -119,7 +109,8 @@ impl CliConfig {
             filepaths,
             parse_mode,
             multi_mode,
-        })
+        };
+        Ok(cli_config)
     }
 }
 
@@ -136,11 +127,11 @@ mod tests {
             OsString::from("test.txt"),
         ];
         let cli_cfg = CliConfig::build(args).unwrap();
-        assert_eq!(cli_cfg.cli_simp_cfg.characters_flag, true);
-        assert_eq!(cli_cfg.cli_simp_cfg.lines_flag, false);
-        assert_eq!(cli_cfg.cli_simp_cfg.words_flag, false);
-        assert_eq!(cli_cfg.cli_simp_cfg.longest_line_flag, false);
-        assert_eq!(cli_cfg.cli_simp_cfg.bytes_flag, false);
+        assert!(cli_cfg.cli_simp_cfg.characters_flag);
+        assert!(!cli_cfg.cli_simp_cfg.lines_flag);
+        assert!(!cli_cfg.cli_simp_cfg.words_flag);
+        assert!(!cli_cfg.cli_simp_cfg.longest_line_flag);
+        assert!(!cli_cfg.cli_simp_cfg.bytes_flag);
     }
 
     #[test]
@@ -151,11 +142,11 @@ mod tests {
             OsString::from("test.txt"),
         ];
         let cli_cfg = CliConfig::build(args).unwrap();
-        assert_eq!(cli_cfg.cli_simp_cfg.characters_flag, true);
-        assert_eq!(cli_cfg.cli_simp_cfg.lines_flag, true);
-        assert_eq!(cli_cfg.cli_simp_cfg.words_flag, true);
-        assert_eq!(cli_cfg.cli_simp_cfg.longest_line_flag, true);
-        assert_eq!(cli_cfg.cli_simp_cfg.bytes_flag, true);
+        assert!(cli_cfg.cli_simp_cfg.characters_flag);
+        assert!(cli_cfg.cli_simp_cfg.lines_flag);
+        assert!(cli_cfg.cli_simp_cfg.words_flag);
+        assert!(cli_cfg.cli_simp_cfg.longest_line_flag);
+        assert!(cli_cfg.cli_simp_cfg.bytes_flag);
     }
 
     #[test]
@@ -165,10 +156,10 @@ mod tests {
             OsString::from("test.txt"),
         ];
         let cli_cfg = CliConfig::build(args).unwrap();
-        assert_ne!(cli_cfg.cli_simp_cfg.characters_flag, true);
-        assert_ne!(cli_cfg.cli_simp_cfg.lines_flag, true);
-        assert_ne!(cli_cfg.cli_simp_cfg.words_flag, true);
-        assert_ne!(cli_cfg.cli_simp_cfg.longest_line_flag, true);
-        assert_ne!(cli_cfg.cli_simp_cfg.bytes_flag, true);
+        assert!(!cli_cfg.cli_simp_cfg.characters_flag);
+        assert!(!cli_cfg.cli_simp_cfg.lines_flag);
+        assert!(!cli_cfg.cli_simp_cfg.words_flag);
+        assert!(!cli_cfg.cli_simp_cfg.longest_line_flag);
+        assert!(!cli_cfg.cli_simp_cfg.bytes_flag);
     }
 }
