@@ -1,0 +1,23 @@
+[package]
+name = "ethan-rs-wc"
+version = "0.1.0"
+edition = "2021"
+description = """
+The ethan-rs-ws(erwc) is word, line, character, and byte count. 
+Like wc command but not just wc command, more accurate and faster.
+Text can also be read from standard input for statistics.
+"""
+license = "MIT"
+
+[[bin]]
+bench = false
+path = "src/main.rs"
+name = "erwc"
+
+[dependencies]
+clap = "4.5.16"
+rayon = "1.10.0"
+
+
+[profile.release]
+panic = "abort"
