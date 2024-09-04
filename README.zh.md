@@ -95,9 +95,9 @@ $ awk '{
 ### 多个文件的数据统计
 
 | 命令                                                                                                 | 耗时                                         |
-| ---------------------------------------------------------------------------------------------------- | -------------------------------------------- | --- |
-| `erwc tests/data/largefile.txt tests/data/splitfile.txt tests/data/sherlock.txt tests/data/test.txt` | 9.04s user 0.60s system 156% cpu 6.166 total |     |
-| `wc tests/data/largefile.txt tests/data/splitfile.txt tests/data/sherlock.txt tests/data/test.txt`   | 9.34s user 0.33s system 99% cpu 9.694 total  |     |
+| ---------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `erwc tests/data/largefile.txt tests/data/splitfile.txt tests/data/sherlock.txt tests/data/test.txt` | 9.04s user 0.60s system 156% cpu 6.166 total |
+| `wc tests/data/largefile.txt tests/data/splitfile.txt tests/data/sherlock.txt tests/data/test.txt`   | 9.34s user 0.33s system 99% cpu 9.694 total  |
 
 ### 其它工具统计文件行数
 
