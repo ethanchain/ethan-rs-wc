@@ -22,6 +22,22 @@ impl Mode {
     pub fn run(args: env::ArgsOs) {
         run(args);
     }
+
+    /// Open library package method
+    ///
+    /// Receive construction parameters
+    /// # Example
+    /// let args = vec![
+    ///     OsString::from("target/debug/erwc"),
+    ///     OsString::from("tests/data/sherlock.txt"),
+    /// ];
+    pub fn erwc<I, T>(args: I)
+    where
+        I: IntoIterator<Item = T>,
+        T: Into<OsString> + Clone,
+    {
+        run(args);
+    }
 }
 
 /// Refactor code for simulated testing.
