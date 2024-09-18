@@ -129,13 +129,21 @@ impl StatData {
     /// Read from standard input content text.
     ///
     /// cli_simp_cfg,   basic command line configuration, simple.
+    ///
+    /// #Example
+    /// erwc <<EOF
+    /// > 123 456
+    /// > abc def
+    /// > EOF
+    ///
+    /// Will print: 4       2       15      15      [std-in]
+    ///
     pub(crate) fn read_std_in_contents(cli_simp_cfg: CliSimpCfg) {
         // Standard input
         Self::process_lines(
             || {
-                Ok(Box::new(io::BufReader::new(io::stdin()))
-                    as Box<dyn BufRead>)
-                .map(|reader| reader.lines())
+                Ok(Box::new(BufReader::new(io::stdin())) as Box<dyn BufRead>)
+                    .map(|reader| reader.lines())
             },
             cli_simp_cfg,
             "[std-in]",
