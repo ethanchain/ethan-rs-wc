@@ -20,17 +20,33 @@ impl Mode {
     /// Use this to collect statistics based on the command line parameter configuration.
     /// Using Rayon's artifact iterator for bulk file processing.
     pub fn run(args: env::ArgsOs) {
-        run(args);
+        Self::erwc(args);
     }
 
     /// Open library package method
     ///
     /// Receive construction parameters
+    ///
     /// # Example
+    /// ```rust
+    /// use std::ffi::OsString;
     /// let args = vec![
-    ///     OsString::from("target/debug/erwc"),
+    ///     OsString::from("erwc"),
     ///     OsString::from("tests/data/sherlock.txt"),
     /// ];
+    /// ethan_rs_wc::Mode::erwc(args);
+    /// ```
+    /// ## Commandline standard input
+    /// ```bash
+    /// $ erwc <<EOF
+    /// > 123 456
+    /// > abc def
+    /// > EOF
+    /// ```
+    /// ## Commandline read files
+    /// ```bash
+    /// $ erwc data/sherlock.txt data/test.txt
+    /// ```
     pub fn erwc<I, T>(args: I)
     where
         I: IntoIterator<Item = T>,

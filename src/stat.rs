@@ -131,10 +131,12 @@ impl StatData {
     /// cli_simp_cfg,   basic command line configuration, simple.
     ///
     /// #Example
-    /// erwc <<EOF
+    /// ```bash
+    /// $ erwc <<EOF
     /// > 123 456
     /// > abc def
     /// > EOF
+    /// ```
     ///
     /// Will print: 4       2       15      15      [std-in]
     ///
@@ -149,6 +151,26 @@ impl StatData {
             "[std-in]",
         )
         .unwrap();
+    }
+
+    /// For unit test, constructing text data
+    #[allow(dead_code)]
+    fn read_std_in_contents0<R>(
+        cli_simp_cfg: CliSimpCfg,
+        in_txt: R,
+    ) -> Result<Stat, io::Error>
+    where
+        R: BufRead + 'static + Clone,
+    {
+        // Standard input
+        Self::process_lines(
+            || {
+                Ok(Box::new(in_txt.clone()) as Box<dyn BufRead>)
+                    .map(|reader| reader.lines())
+            },
+            cli_simp_cfg,
+            "[std-in]",
+        )
     }
 }
 
@@ -235,6 +257,24 @@ mod tests {
         let cli_simp_cfg = CliSimpCfg::default();
         let stat = StatData::read_file(filepath, cli_simp_cfg).unwrap();
         // words, lines, characters, bytes
+        assert_eq!(stat.words, 9);
+        assert_eq!(stat.lines, 5);
+        assert_eq!(stat.characters, 38);
+        assert_eq!(stat.bytes, 42);
+    }
+
+    #[test]
+    fn read_std_in_contents() {
+        let cli_simp_cfg = CliSimpCfg::default();
+        let input_data = "\
+# 1 a car
+two
+
+
+there three tree    你,好,a ";
+        let in_txt = std::io::Cursor::new(input_data);
+        let stat =
+            StatData::read_std_in_contents0(cli_simp_cfg, in_txt).unwrap();
         assert_eq!(stat.words, 9);
         assert_eq!(stat.lines, 5);
         assert_eq!(stat.characters, 38);
