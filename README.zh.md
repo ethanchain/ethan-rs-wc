@@ -1,3 +1,6 @@
+[![Tests](https://github.com/ethancws/ethan-rs-wc/actions/workflows/tests.yml/badge.svg)](https://github.com/ethancws/ethan-rs-wc/actions/workflows/tests.yml)
+[![Crates.io](https://img.shields.io/crates/v/ethan-rs-wc.svg)](https://crates.io/crates/ethan-rs-wc)
+
 ## ethan-rs-wc (erwc)
 
 ethan-rs-ws(erwc)命令能够统计文件与标准输入的单词数，行数，字符数和字节数。
