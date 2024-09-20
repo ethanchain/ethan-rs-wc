@@ -9,7 +9,6 @@ Text can also be read from standard input for statistics.
 """
 license = "MIT"
 repository = "https://github.com/ethanchain/ethan-rs-wc"
-categories = ["Command-line-utilities", "Text-statistics"]
 
 [[bin]]
 bench = false
