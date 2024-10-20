@@ -20,7 +20,7 @@ erwc 命令像 wc 命令但是不仅仅是 wc 命令，相比它统计数据更�
   - 请按照 Rust 的官方文档配置 Rust 的运行环境，当你打开终端并运行 `rustc --version` 看见像这样的输出 `rustc x.y.z (abcabcabc yyyy-mm-dd)` ，以及在终端运行 `cargo --version` 看见像这样的输出 `cargo x.y.z (abcabc yyyy-mm-dd)` ，这些信息说明你已经把 Rust 的运行环境配置好了。
 
 ```bash
-$ git clone https://github.com/ethancws/ethan-rs-wc.git
+$ git clone https://github.com/ethanchain/ethan-rs-wc.git
 $ cd ethan-rs-wc
 $ cargo build --release
 ```

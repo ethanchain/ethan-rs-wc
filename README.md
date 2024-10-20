@@ -22,7 +22,7 @@ Text can also be read from standard input for statistics.
     like `rustc x.y.z (abcabcabc yyyy-mm-dd)`. And on the shell you run `cargo --version` and see a response like `cargo x.y.z (abcabc yyyy-mm-dd)`. This means you successfully installed the Rust compilation environment.
 
 ```bash
-$ git clone https://github.com/ethancws/ethan-rs-wc.git
+$ git clone https://github.com/ethanchain/ethan-rs-wc.git
 $ cd ethan-rs-wc
 $ cargo build --release
 ```
